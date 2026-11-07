@@ -1,4 +1,6 @@
-# Pokémon Lab V0.1
+# Pokémon Lab V0.1 · documento histórico
+
+La versión actual está documentada en [README.md](README.md). Este documento describe exclusivamente el generador original, conservado ahora en `herramientas.html`. Sus instrucciones de publicación no corresponden al editor v0.2, que requiere construir `dist` y publicar con GitHub Actions.
 
 Aplicación web estática en español. Incluye:
 
