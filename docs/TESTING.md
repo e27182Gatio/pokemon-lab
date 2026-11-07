@@ -41,3 +41,8 @@ El entorno local restringe la creación de subprocesos: por ello se ejecutaron l
 - Legalidad u origen auténtico de cada Pokémon; aceptación en Banco/HOME u otros juegos.
 
 No se amplía el soporte por extensión de archivo, por el nombre `sav.dat`, ni porque el motor general soporte otras generaciones. Cada formato adicional requiere pruebas independientes.
+## Yellow (v0.3)
+
+Se habilita Yellow internacional (versionId 38 del motor). Pasaron 16 pruebas unitarias y 17 comprobaciones de motor: las 14 anteriores de Blue y 3 de Yellow (importar/exportar exacto, editar equipo/caja preservando datos de Pikachu/progreso y deshacer exacto).
+
+Se probó localmente una copia privada de un guardado real Yellow: 26 Pokémon leídos, exportación sin cambios idéntica, edición de nivel con relectura y checksum, región 0x271c..0x2f2b intacta y deshacer exacto. El archivo original no se modificó y no se incluye en el repositorio ni en el despliegue. Restauración física en 3DS y Android real aún pendientes.
