@@ -1,58 +1,46 @@
-# Pokémon Lab · v0.3
-
-Editor local y experimental para guardados **Pokémon Rojo/Azul/Yellow internacionales de 32.768 bytes**, orientado a usar desde Android los respaldos extraídos de Consola Virtual 3DS. No requiere PC para el flujo de usuario una vez publicado.
-
-**Estado:** implementación y pruebas locales; publicación de esta versión pendiente de acceso autenticado a GitHub. No se ha probado una partida real del usuario ni una restauración física en su 3DS.
-
-## Funciones
-
-- Importar `.sav` o `sav.dat` por su contenido, con tamaño, listas y checksum comprobados.
-- Ver equipo y doce cajas; editar Pokémon existentes: especie, nivel, mote, DVs, experiencia de estadísticas y movimientos.
-- Motor real `@pkhex-everywhere/engine` 0.31.0, con PKHeX.Core en WebAssembly.
-- Original conservado byte por byte; respaldo local en IndexedDB, descarga independiente y SHA-256.
-- Edición transaccional: borrador, exportación, relectura y comparación. Recuperación ante fallos.
-- Bloqueo si el motor altera datos fuera de las regiones previstas. La Pokédex puede actualizarse al cambiar especie.
-- Exportación sin cambios idéntica al archivo importado. Informe de cambios descargable.
-- Análisis de legalidad de PKHeX separado de la integridad del archivo; no es una garantía de servicios oficiales.
-- Interfaz en español, adaptable a móvil, y guía de transferencia por Wi-Fi.
-- Generador Showdown y calculadora de DVs anteriores conservados en `herramientas.html`.
-
-La web no sube partidas, no conecta con Nintendo ni realiza FTP. El teléfono transfiere archivos mediante un cliente FTP y la consola ejecuta ftpd. [Guía 3DS ↔ Android](docs/WIFI-3DS.md).
-
-## Límites
-
-Rojo y Azul comparten estructura: PKHeX puede mostrar `Red` al abrir Blue. Un nombre `sav.dat` no prueba origen de Consola Virtual. Se rechazan japonés, Yellow, otras generaciones, ROM hacks, ROM/CIA/ZIP y estados de emulador. No se crean Pokémon desde cero ni se editan eventos, inventario o dinero.
-
-Las pruebas actuales son sintéticas; no acreditan compatibilidad de cada región, una partida jugable, funcionamiento de Android real, restauración en consola ni aceptación en Banco/HOME. Nunca restaures el fixture de pruebas. Conserva un respaldo independiente antes de experimentar.
-
-## Desarrollo y comprobación
-
-Requiere Node.js 22 o posterior; CI usa Node 24 y pnpm 11.25.0.
-
-```sh
-pnpm install --frozen-lockfile --ignore-scripts
-pnpm test
-pnpm build
-pnpm preview
-```
-
-Abrir `http://127.0.0.1:4173/pokemon-lab/`. El build genera `dist/` y copia el runtime de forma local; no basta con publicar el HTML fuente. Cada build limpia únicamente la carpeta generada `dist` tras verificar su ruta.
-
-Con el servidor activo:
-
-```sh
-pnpm exec playwright install chromium
-pnpm test:browser
-```
-
-Alternativa visible: `/pokemon-lab/pruebas.html`, botón **Ejecutar pruebas**. Comprueba el motor real sin una ROM. La prueba de almacenamiento crea un respaldo sintético claramente identificado. [Evidencia y límites de pruebas](docs/TESTING.md).
-
-## GitHub Pages
-
-El flujo `.github/workflows/pages.yml` prueba, construye y publica `dist` en `main`. Las solicitudes de cambio ejecutan pruebas sin desplegar. El trabajo de publicación depende de que las pruebas terminen correctamente.
-
-En Settings → Pages, la fuente debe ser **GitHub Actions**, no la raíz de `main` usada por v0.1. Destino previsto: `https://e27182Gatio.github.io/pokemon-lab/`. La existencia de esta URL no demuestra que v0.3 haya sido desplegada; comprobar la ejecución de Actions y la versión visible antes de anunciarlo.
-
-## Licencia
-
-GPL-3.0-or-later. Incluye `LICENSE`, avisos de dependencias y enlaces al código correspondiente de los motores. [Decisiones técnicas, versiones y fuentes](docs/ENGINE.md). Proyecto independiente, sin afiliación con Nintendo, Game Freak o PKHeX.
+# Pokémon Lab · v0.4
+
+Editor local en español. [Abrir Pokémon Lab](https://e27182gatio.github.io/pokemon-lab/).
+
+## Raichu de Alola
+
+Nueva sección `raichu.html`, limitada a este Pokémon:
+
+- Crear un .pk7 con origen Ultra Sol o Ultra Luna, entrenador configurable, shiny opcional y Luxury Ball.
+- Opción perfecto: seis IVs de 31. Los EVs se distribuyen por separado.
+- Set recomendado para Z-A, temporada 19: Modesta, Banda Focus, 252 PS / 252 At. Especial / 4 Defensa; Rayo, Psíquico, Psicocarga y Maquinación.
+- Recomendación revisada el 08/11/2026, con fuentes y fecha de caducidad. No se actualiza automáticamente; al terminar la temporada aparece como histórica.
+- Abrir un `main` USUM de 445.440 bytes para añadirlo a una caja vacía o editar un Raichu de Alola existente con origen USUM.
+- Descarga independiente del respaldo original, comprobación de CRC, legalidad y relectura del guardado; comparación de bytes para conservar otros Pokémon y el progreso.
+- Código %trade copiable. El código no fija el origen; el .pk7 sí.
+
+El archivo .pk7 es de séptima generación, no un archivo de Z-A. Las transferencias se realizan fuera de esta web y pueden cambiar movimientos u objetos. La restauración USUM en consola física no se ha probado. Los guardados artificiales de pruebas no se ofrecen como partidas descargables.
+
+## Editor Rojo, Azul y Yellow
+
+El editor existente admite guardados internacionales de 32.768 bytes: equipo, cajas, nivel, mote, DVs, experiencia de estadísticas y movimientos. Mantiene respaldo local en IndexedDB, exportación sin cambios idéntica e informe de cambios. Las herramientas Showdown/DVs siguen en `herramientas.html`.
+
+La web no sube partidas ni conecta con Nintendo. Motor PKHeX Everywhere 0.31.0 alojado con la aplicación. La legalidad de PKHeX no garantiza aceptación por servicios oficiales. [Guía 3DS y Android](docs/WIFI-3DS.md).
+
+## Desarrollo
+
+Node 22 o posterior; CI usa Node 24 y pnpm 11.25.0.
+
+```sh
+pnpm install --frozen-lockfile --ignore-scripts
+pnpm test
+pnpm build
+pnpm preview
+pnpm exec playwright install chromium
+pnpm test:browser
+```
+
+Abrir http://127.0.0.1:4173/pokemon-lab/. El build crea `dist/` con el runtime; no basta publicar el HTML fuente. Pruebas visibles en `pruebas.html` y `pruebas-raichu.html`, con datos sintéticos. Las pruebas USUM cubren ambos orígenes, IVs, shiny, ataques, exportación PK7, edición, adición, conservación del guardado, deshacer y rechazo de corrupción. La relectura de séptima generación se hace mediante el guardado completo; `pokemon.read` del motor solo admite generaciones 3–5.
+
+GitHub Actions comprueba y publica `dist/` en main únicamente si pasan las pruebas, incluida la interfaz móvil y las descargas.
+
+## Fuentes y licencia
+
+[Temporada 19 oficial](https://plza-news.pokemon-home.com/en/page/51.html), [guía competitiva](https://gamewith.jp/pokemon-za/525028), [movimientos](https://www.serebii.net/pokedex-sv/raichu/).
+
+GPL-3.0-or-later. [Motor y avisos](docs/ENGINE.md). Proyecto independiente, sin afiliación con Nintendo, Game Freak o PKHeX.

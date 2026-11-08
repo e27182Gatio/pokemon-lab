@@ -21,4 +21,22 @@ try {
   const download=await event;if(download.suggestedFilename()!=='fixture-sintetico-NO-RESTAURAR.sav')throw new Error('Nombre de exportación incorrecto.');
   if(errors.length)throw new Error(errors.join('\n'));
   console.log('Interfaz móvil: recuperar, editar y descargar OK.');
+  await page.goto('http://127.0.0.1:4173/pokemon-lab/pruebas-raichu.html');
+  await page.getByRole('button',{name:'Ejecutar pruebas Raichu',exact:true}).click();
+  await page.waitForFunction(()=>['pass','fail'].includes(document.querySelector('#results').dataset.result),null,{timeout:180000});
+  console.log(await page.locator('#results').textContent());
+  if(await page.locator('#results').getAttribute('data-result')!=='pass')throw new Error('Fallaron las pruebas USUM.');
+  await page.goto('http://127.0.0.1:4173/pokemon-lab/raichu.html');
+  if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw new Error('Desbordamiento móvil en Raichu.');
+  await page.locator('#origin').selectOption('33');
+  await page.locator('#use-meta').check();
+  await page.getByRole('button',{name:'Crear Raichu de Alola',exact:true}).click();
+  await page.locator('#result').waitFor({state:'visible',timeout:90000});
+  if(!(await page.locator('#summary').textContent()).includes('Ultra Luna'))throw new Error('No conservó la selección de Ultra Luna.');
+  const pk7Event=page.waitForEvent('download');await page.locator('#download-pk7').click();
+  if((await pk7Event).suggestedFilename()!=='Raichu-Alola-Ultra-Luna.pk7')throw new Error('Descarga .pk7 incorrecta.');
+  await page.locator('#level').fill('80');
+  if(await page.locator('#result').isVisible())throw new Error('Se permite descargar un resultado anterior a la edición.');
+  if(errors.length)throw new Error(errors.join('\n'));
+  console.log('Raichu móvil: origen, creación, descarga y cambios pendientes OK.');
 } finally {await browser.close();}

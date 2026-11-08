@@ -13,11 +13,11 @@ if(existsSync(target)){
   await rm(target,{recursive:true});
 }
 await mkdir('dist/assets', { recursive: true });
-const inputs = {app: 'src/app.js', selftest: 'src/selftest.js'};
+const inputs = {app: 'src/app.js', selftest: 'src/selftest.js', raichu:'src/raichu.js', 'raichu-selftest':'src/raichu-selftest.js'};
 const bundle = await rollup({ input: inputs, plugins: [nodeResolve({ browser: true }), commonjs()], onwarn(w, warn) { if (w.code !== 'CIRCULAR_DEPENDENCY') warn(w); } });
 await bundle.write({ dir: 'dist/assets', format: 'es', entryFileNames: '[name].js', chunkFileNames: '[name]-[hash].js' });
 await bundle.close();
-for (const name of ['index.html', 'herramientas.html', 'pruebas.html']) await copyFile(name, `dist/${name}`);
+for (const name of ['index.html', 'herramientas.html', 'pruebas.html', 'raichu.html', 'pruebas-raichu.html']) await copyFile(name, `dist/${name}`);
 await cp('public', 'dist', { recursive: true });
 await cp('node_modules/@pkhex-everywhere/engine/_framework', 'dist/_framework', { recursive: true, filter: p => !/\.(br|gz)$/.test(p) });
 await copyFile('node_modules/@pkhex-everywhere/engine/notices.json', 'dist/notices.json');

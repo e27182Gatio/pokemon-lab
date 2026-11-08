@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101722"><title>Raichu de Alola · Pokémon Lab</title><link rel="stylesheet" href="./style.css"><style>
+.alola-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}.alola-grid .stack{align-content:start}.alola-grid textarea{box-sizing:border-box;width:100%;min-height:260px;padding:16px;background:#111b2a;color:var(--ink);border:1px solid var(--line);border-radius:10px;font:13px/1.7 ui-monospace,monospace;resize:vertical}.stat-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.stat-summary p{padding:10px;background:#111b2a;border-radius:8px;margin:0;font-size:13px}.move-list{padding-left:20px}.move-list strong{color:var(--ink)}@media(max-width:750px){.alola-grid{grid-template-columns:1fr}}.alola-grid .file-card{order:0}.alola-grid label{margin-bottom:12px}
+</style></head><body><main class="shell">
+<header class="topbar"><div class="brand"><span class="brandmark" aria-hidden="true"></span>Pokémon Lab</div><nav aria-label="Principal"><a href="./index.html">Blue y Yellow</a><a href="./herramientas.html">Showdown y DVs</a></nav></header>
+<section class="hero"><div><p class="eyebrow">Laboratorio de Alola · v0.4</p><h1>Raichu, desde Alola hasta Z-A.</h1><p class="muted scope">Prepara a Raichu de Alola con origen Ultra Sol o Ultra Luna. Maximiza sus IVs y elige el set recomendado para Leyendas Pokémon: Z-A.</p></div><span class="tag">Eléctrico / Psíquico</span></section>
+<p id="status" class="status" role="status" aria-live="polite">Elige el origen y prepara tu Pokémon. Todo se procesa en este navegador.</p>
+<div class="alola-grid"><div class="stack">
+<section class="card file-card"><h2>01 · Elige el origen</h2>
+<label class="field"><span>Juego de origen</span><select id="origin"><option value="32">Pokémon Ultra Sol · Nintendo 3DS</option><option value="33">Pokémon Ultra Luna · Nintendo 3DS</option></select></label>
+<label class="field"><span>Entrenador original para un Pokémon nuevo sin partida</span><input id="trainer-name" maxlength="12" value="LAB" autocomplete="off"></label>
+<p class="hint">Puedes descargar un archivo .pk7 para importarlo con PKSM/PKHeX, o abrir tu guardado para añadirlo a una caja vacía con los datos de tu entrenador.</p>
+<div class="upload"><label for="main-file">Abrir guardado de Ultra Sol / Ultra Luna</label><input id="main-file" type="file"><span class="hint">Archivo main extraído por Checkpoint · 445.440 bytes</span></div>
+<div id="save-panel" hidden><p id="save-info"></p><button id="backup">Descargar respaldo original</button><label class="check"><input id="backup-confirm" type="checkbox"><span>He guardado una copia independiente del original.</span></label><label class="field"><span>Destino</span><select id="target"><option value="new">Añadir Raichu a la primera posición vacía</option></select></label><p class="hint">La edición de Pokémon existentes se limita a Raichu de Alola de Ultra Sol o Ultra Luna que estén en las cajas.</p><button id="reset">Deshacer cambios del guardado</button></div>
+<p id="engine-status" class="engine">El motor se descargará al preparar un Pokémon o abrir una partida.</p>
+</section>
+<section class="card"><h2>02 · Prepara a Raichu</h2><fieldset id="settings">
+<label class="field"><span>Nivel (3–100)</span><input id="level" type="number" min="3" max="100" step="1" value="70" inputmode="numeric"></label>
+<label class="check"><input id="perfect" type="checkbox" checked><span><strong>Pokémon perfecto: seis IVs de 31.</strong> Maximiza sus valores genéticos; los EVs se distribuyen por separado.</span></label>
+<label class="check"><input id="shiny" type="checkbox" checked><span>Shiny / variocolor</span></label>
+<label class="check"><input id="use-meta" type="checkbox" checked><span id="meta-toggle-label">Aplicar set de Z-A · temporada 19: ataques, naturaleza, objeto y EVs.</span></label>
+<p class="hint">Los nuevos Raichu se preparan sin apodo, en Luxury Ball, a partir de un encuentro salvaje de Pikachu en el juego elegido. Los existentes conservan su origen, entrenador, apodo y Ball.</p>
+<button id="prepare" class="primary">Crear Raichu de Alola</button></fieldset></section>
+<section id="result" class="card" hidden><h2>03 · Listo para descargar</h2><p id="summary"></p><div id="stats" class="stat-summary"></div><p id="legality" class="notice" role="status"></p><details><summary>Origen y comprobación</summary><pre id="details"></pre></details><div class="actions"><button id="download-pk7" class="primary">Descargar Raichu .pk7</button><button id="download-save" hidden>Verificar y descargar main</button></div><p class="hint" style="margin-top:14px">El .pk7 contiene un Pokémon de séptima generación, no una partida ni un archivo de Z-A. Para restaurar main, utiliza una copia de tu respaldo en Checkpoint. Restauración en consola física pendiente de prueba.</p></section>
+</div><div class="stack">
+<section class="card"><div class="row"><h2>Set para Leyendas Pokémon: Z-A</h2><span class="tag">Temporada 19</span></div><p id="season-status" class="notice"></p><p class="hint">Revisado el 8 de noviembre de 2026. Recomendación editorial, no clasificación oficial ni actualización automática.</p>
+<p><strong>Modesta · Banda Focus</strong><br>252 PS / 252 Ataque Especial / 4 Defensa</p><ol id="moves" class="move-list"></ol>
+<p class="hint">Aprovecha la distancia y prepara Maquinación cuando estés a salvo. Es frágil: Banda Focus ayuda si tiene todos sus PS. Rayo hace daño neutro a Mega-Feraligatr. Este set también puede aprenderse en Ultra Sol y Ultra Luna, pero está pensado para Z-A.</p>
+<p class="hint"><a href="https://plza-news.pokemon-home.com/en/page/51.html">Reglas oficiales</a> · <a href="https://gamewith.jp/pokemon-za/525028">Guía competitiva</a> · <a href="https://www.serebii.net/pokedex-sv/raichu/">Movimientos en Z-A</a></p></section>
+<section class="card"><h2>Código para Discord</h2><p class="hint">Esta solicitud %trade prepara el set de Z-A. El código no fija el juego de origen; para conservar Ultra Sol o Ultra Luna usa el .pk7 generado.</p><label class="field"><span>Solicitud para el bot</span><textarea id="trade-code" readonly spellcheck="false"></textarea></label><button id="copy-code">Copiar %trade</button><p id="copy-status" class="hint" role="status"></p></section>
+<section class="card"><h2>Tu Raichu de séptima generación</h2><p class="hint">Raichu de Alola debutó en Sol y Luna (2016). Aquí puedes elegir Ultra Sol o Ultra Luna (2017). La web guarda esa procedencia en el Pokémon.</p><p class="hint">La transferencia hacia otros juegos se realiza mediante servicios compatibles fuera de esta web. Los movimientos y objetos del destino deben revisarse de nuevo al transferirlo; Pokémon Lab no envía archivos a Banco ni HOME.</p></section>
+</div></div>
+<footer class="footer">Solo Raichu de Alola en esta sección · Motor PKHeX Everywhere 0.31.0 · <a href="./fuentes.html">Fuentes y licencia GPL</a> · <a href="./pruebas-raichu.html">Pruebas de Ultra Sol y Ultra Luna</a></footer>
+</main><script type="module" src="./assets/raichu.js"></script></body></html>
+
+

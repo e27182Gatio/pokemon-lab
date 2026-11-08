@@ -1,6 +1,6 @@
 {
   "name": "pokemon-lab",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "license": "GPL-3.0-or-later",
@@ -10,7 +10,7 @@
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
     "preview": "node scripts/serve.mjs",
-    "test": "node tests/validation.test.mjs",
+    "test": "node --test tests/*.test.mjs",
     "test:browser": "node scripts/test-browser.mjs"
   },
   "dependencies": {
